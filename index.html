@@ -12,6 +12,7 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11161f;--card:#1a2130;--ink:#e8ebf2;--muted:#a3abbd;--brand:#16263d;--brand2:#1f3a5f;--accent:#d6b25f;--line:#2b3446;--onbrand:#fff;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#11161f;--card:#1a2130;--ink:#e8ebf2;--muted:#a3abbd;--brand:#16263d;--brand2:#1f3a5f;--accent:#d6b25f;--line:#2b3446;--onbrand:#fff;color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--ink);line-height:1.9;direction:rtl;margin:0}
 h1,h2,h3,p{margin:0}
 a{color:inherit;text-decoration:none}
@@ -170,7 +171,7 @@ document.getElementById("cform").addEventListener("submit",e=>{e.preventDefault(
 function unlock(){document.getElementById("gate").hidden=true;document.getElementById("site").hidden=false}
 try{if(sessionStorage.getItem("hamoon_ok")==="1")unlock()}catch(e){}
 document.getElementById("gateForm").addEventListener("submit",e=>{e.preventDefault();
- const v=document.getElementById("pw").value.replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+ const v=document.getElementById("pw").value.trim().replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));
  if(v==="12344321"){try{sessionStorage.setItem("hamoon_ok","1")}catch(e){}unlock()}else document.getElementById("err").hidden=false});
 </script>
 
