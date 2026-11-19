@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>هامون اجاره مکان</title>
+<title>کاهبیسین</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -66,13 +66,24 @@ footer{background:var(--brand);color:var(--onbrand);opacity:.95;text-align:cente
 #gate{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:50;padding:16px}
 #gate .card{max-width:340px;width:100%;text-align:center;display:grid;gap:14px}
 #err{color:#c0392b;font-size:14px}
+.gamebox{max-width:420px;margin:auto;display:grid;gap:14px;justify-items:center}
+.hud{display:flex;width:100%;justify-content:space-between;font-size:15px}
+.hud b{color:var(--accent)}
+#cv{width:100%;max-width:360px;height:auto;aspect-ratio:1;border-radius:14px;border:2px solid var(--accent);box-shadow:0 0 28px #c8a14b55;touch-action:none;background:#0b1220}
+#gmsg{min-height:1.9em;color:var(--accent);font-weight:600}
+.pad{direction:ltr;display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,56px);gap:8px}
+.pad button{font-size:22px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.pad .u{grid-column:2}.pad .l{grid-row:2;grid-column:1}.pad .dn{grid-row:2;grid-column:2}.pad .r{grid-row:2;grid-column:3}
+.unlock{font-family:inherit;font-size:13px;padding:0 10px;border-radius:14px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+#amodal .box{max-width:340px}
+#amodal form{padding:24px;text-align:center}
 @media(max-width:720px){nav ul{display:none}.hero h1{font-size:28px}.about,.contact{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.member{transition:none}}
 </style>
 
 <div id="gate"><form class="card" id="gateForm">
   <div class="mark" style="margin:auto">ه</div>
-  <h3>ورود به سایت هامون</h3>
+  <h3>ورود به سایت کاهبیسین</h3>
   <input id="pw" type="password" inputmode="numeric" placeholder="رمز ورود" autocomplete="off">
   <div id="err" hidden>رمز اشتباه است، دوباره امتحان کنید.</div>
   <button class="btn">ورود</button>
@@ -80,8 +91,8 @@ footer{background:var(--brand);color:var(--onbrand);opacity:.95;text-align:cente
 
 <div id="site" hidden>
 <header><div class="wrap"><nav>
-  <div class="logo"><div class="mark">ه</div>هامون<span>.</span></div>
-  <ul><li><a href="#services">خدمات</a></li><li><a href="#team">اعضا</a></li><li><a href="#about">درباره ما</a></li><li><a href="#contact">تماس</a></li></ul>
+  <div class="logo"><div class="mark">ه</div>کاهبیسین<span>.</span></div>
+  <ul><li><a href="#services">خدمات</a></li><li><a href="#team">اعضا</a></li><li><a href="#game">بازی</a></li><li><a href="#about">درباره ما</a></li><li><a href="#contact">تماس</a></li></ul>
 </nav></div></header>
 
 <div class="hero"><div class="wrap">
@@ -105,24 +116,36 @@ footer{background:var(--brand);color:var(--onbrand);opacity:.95;text-align:cente
   <div class="team" id="members"></div>
 </div></section>
 
+<section id="game"><div class="wrap">
+  <h2>بازی ماری</h2><p class="sub">هامون، تلامپوس و علیزاده را بخور و بزرگ شو! با کلیدهای جهت‌دار، W A S D، دکمه‌ها یا کشیدن انگشت بازی کن.</p>
+  <div class="gamebox">
+    <div class="hud"><span>امتیاز: <b id="sc">0</b></span><span>رکورد: <b id="hs">0</b></span></div>
+    <canvas id="cv" width="360" height="360" aria-label="بازی ماری"></canvas>
+    <div id="gmsg"></div>
+    <div class="pad"><button class="u" data-d="0,-1" aria-label="بالا">▲</button><button class="l" data-d="-1,0" aria-label="چپ">◀</button><button class="dn" data-d="0,1" aria-label="پایین">▼</button><button class="r" data-d="1,0" aria-label="راست">▶</button></div>
+    <button class="btn" id="startBtn">شروع بازی</button>
+  </div>
+</div></section>
+
 <section id="about"><div class="wrap about">
-  <div><h2 style="text-align:right">درباره هامون</h2>
-  <p style="color:var(--muted)">هامون یک شرکت کوچک و متعهد در حوزه اجاره مکان است. هدف ما این است که پیدا کردن و اجاره کردن یک مکان مناسب، ساده، مطمئن و بدون دردسر باشد.</p></div>
-  <div class="card"><p>📍 شهرک اندیشه، پردیس ۳</p><p>📞 ۰۹۱۹۴۴۳۵۵xx</p><p>🕘 شنبه تا پنجشنبه، ۹ تا ۱۸</p></div>
+  <div><h2 style="text-align:right">درباره کاهبیسین</h2>
+  <p style="color:var(--muted)">کاهبیسین یک شرکت کوچک و متعهد در حوزه اجاره مکان است. هدف ما این است که پیدا کردن و اجاره کردن یک مکان مناسب، ساده، مطمئن و بدون دردسر باشد.</p></div>
+  <div class="card"><p>📍 شهرک اندیشه، <span class="addr">پردیس <button class="unlock" type="button">🔒 نمایش</button></span></p><p>📞 ۰۹۱۹۴۴۳۵۵xx</p><p>🕘 شنبه تا پنجشنبه، ۹ تا ۱۸</p></div>
 </div></section>
 
 <section id="contact" class="alt"><div class="wrap">
   <h2>تماس با ما</h2><p class="sub">پیام بگذارید تا با شما تماس بگیریم</p>
   <div class="contact">
-    <div class="card"><p>📍 آدرس: شهرک اندیشه، پردیس ۳</p><p>📞 تلفن: ۰۹۱۹۴۴۳۵۵xx</p><p>تلگرام: hamoon_t@</p></div>
+    <div class="card"><p>📍 آدرس: شهرک اندیشه، <span class="addr">پردیس <button class="unlock" type="button">🔒 نمایش</button></span></p><p>📞 تلفن: ۰۹۱۹۴۴۳۵۵xx</p><p>تلگرام: hamoon_t@</p></div>
     <form id="cform"><input id="cname" placeholder="نام و نام خانوادگی" required><input id="cphone" placeholder="شماره تماس" required><textarea id="cmsg" rows="4" placeholder="پیام شما"></textarea><button class="btn">ارسال پیام</button><p id="cok" hidden style="color:var(--accent)">این نسخه نمایشی است و پیام ارسال نمی‌شود.</p></form>
   </div>
 </div></section>
 
-<footer><div class="wrap">© ۱۴۰۵ شرکت هامون — تمامی حقوق محفوظ است</div></footer>
+<footer><div class="wrap">© ۱۴۰۵ شرکت کاهبیسین — تمامی حقوق محفوظ است</div></footer>
 </div>
 
 <div class="modal" id="modal" hidden><div class="box" id="box"></div></div>
+<div class="modal" id="amodal" hidden><div class="box"><form id="aform"><h3 style="margin-bottom:10px">نمایش آدرس</h3><p style="color:var(--muted);font-size:14px;margin-bottom:12px">برای دیدن آدرس دقیق، رمز را وارد کنید.</p><input id="apw" type="password" inputmode="numeric" placeholder="رمز" autocomplete="off" style="width:100%;margin-bottom:10px"><div id="aerr" hidden style="color:#c0392b;font-size:14px;margin-bottom:8px">رمز اشتباه است.</div><button class="btn">نمایش</button></form></div></div>
 
 <script>
 // illustrated cartoon avatars (generic, not photos)
@@ -140,13 +163,21 @@ ${o.beard?'<path d="M37 58c2 22 12 30 23 30s21-8 23-30c-4 8-10 12-23 12s-19-4-23
 const members=[
  {name:"هامون طاهرپور",role:"مسئول اجاره مکان – آذربایجان و کردستان",short:"همراه شما برای اجاره سریع و مطمئن مکان در غرب کشور.",
   av:{bg:"#cfe0f5",shirt:"#1f3a5f",beard:true,hair:"M34 50c0-22 14-32 28-32s26 8 26 30c-6-10-14-14-26-14s-20 6-28 16z",mouth:"M50 74q10 9 20 0",tongue:true},
-  bio:"اهل یکی از روستاهای اطراف بیجار است و با شناخت نزدیکی که از منطقه دارد، به مشتریان کمک می‌کند بهترین مکان را با مناسب‌ترین قیمت پیدا کنند. در حال حاضر در شهرک اندیشه، پردیس ۳ مستقر است.<br><b>🎁 تخفیف ویژه برای مشتریان بیجاری</b>",
+  bio:"اهل یکی از روستاهای اطراف بیجار است و با شناخت نزدیکی که از منطقه دارد، به مشتریان کمک می‌کند بهترین مکان را با مناسب‌ترین قیمت پیدا کنند. در حال حاضر در شهرک اندیشه، پردیس <span class='addr'><button class='unlock' type='button'>🔒 نمایش</button></span> مستقر است.<br><b>🎁 تخفیف ویژه برای مشتریان بیجاری</b>",
   letter:"ایشان دارای پروانه کسب و بهداشت هستند و در طول همکاری، با تعهد و صداقت کار کرده‌اند.",
   phone:"۰۹۱۹۴۴۳۵۵xx",social:{"تلگرام":"https://t.me/hamoon_t","اینستاگرام":"https://instagram.com/t_hamoon_t"}},
  {name:"صدرا مکروهی",role:"راننده شبانه – فقط مسیر گیلان ↔ قزوین",short:"نه زنجان، نه تهران؛ فقط گیلان.",
   av:{bg:"#f3e6c8",shirt:"#1d2433",beard:false,hair:"M35 52c-2-24 12-34 27-34 16 0 26 10 24 30-4-8-12-14-24-14-12 0-20 8-27 18z",mouth:"M53 74h14",wink:false},
   bio:"رانندگی با دقت و آرامش، با خودروی ۲۰۷. محل استقرار: شهرک قزوین.<br><b>🎁 تا ۵۰٪ تخفیف کرایه برای بچه‌های جمعه</b>",
-  letter:"برای هماهنگی سفر با منیجر ایشان (هامون طاهرپور) تماس بگیرید.",phone:"",social:{}}
+  letter:"برای هماهنگی سفر با منیجر ایشان (هامون طاهرپور) تماس بگیرید.",phone:"",social:{}},
+ {name:"تلامپوس موتلاسی",role:"دانشجوی دندان‌پزشکی – علوم پزشکی زنجان",short:"حاضر از ساعت ۱۸ عصر تا ۴ بامداد.",
+  av:{bg:"#d8f0e0",shirt:"#2d6a4f",beard:false,hair:"M34 52c0-22 12-34 28-34s26 12 24 32c-5-9-13-13-25-13s-19 6-27 15z",mouth:"M50 74q10 7 20 0"},
+  bio:"دانشجوی دندان‌پزشکی در دانشگاه علوم پزشکی زنجان. از کودکی ورزش اسکات را دنبال می‌کند.<br><b>🕘 ساعت حضور: ۱۸ عصر تا ۴ بامداد</b>",
+  letter:"اطلاعات تماس این عضو محفوظ است.",phone:"محفوظ",social:{}},
+ {name:"محمدامین علیزاده",role:"عضو تیم",short:"ساعت کاری: ۱۰ صبح تا ۲۲ شب.",
+  av:{bg:"#f5d9e0",shirt:"#7b2d4f",beard:true,hair:"M36 50c0-20 12-30 26-30s24 10 24 28c-6-8-13-12-25-12s-18 6-25 14z",mouth:"M50 74q10 6 20 0"},
+  bio:"دوست دارم خودم را با تمام و کمال ارائه بدهم.<br><b>🕘 ساعت کاری: ۱۰ صبح تا ۲۲ شب</b>",
+  letter:"برای هماهنگی با ایشان در ساعات کاری تماس بگیرید.",phone:"۰۹۰۴۶۶۰xxxx",email:"maghadanari@gmail.com",social:{}}
 ];
 document.getElementById("members").innerHTML=members.map((m,i)=>`
  <div class="card member" tabindex="0" data-i="${i}"><div class="avatar">${avatar(m.av)}</div>
@@ -159,14 +190,75 @@ function openM(i){const m=members[i];
  <div class="box-body">
   <h4>بیوگرافی</h4><p>${m.bio}</p>
   <h4>معرفی‌نامه</h4><div class="letter">${m.letter}</div>
-  ${m.phone?`<h4>اطلاعات تماس</h4><p>📞 ${m.phone}</p>`:""}
+  ${m.phone||m.email?`<h4>اطلاعات تماس</h4><p>${m.phone?"📞 "+m.phone:""}${m.email?"<br>✉️ <span dir='ltr'>"+m.email+"</span>":""}</p>`:""}
   ${Object.keys(m.social).length?`<h4>شبکه‌های اجتماعی</h4><div class="links">${Object.entries(m.social).map(([k,v])=>`<a href="${v}" target="_blank" rel="noopener">${k}</a>`).join("")}</div>`:""}
  </div>`;
- modal.hidden=false}
+ modal.hidden=false;if(addrOpen)revealAddr()}
 document.getElementById("members").addEventListener("click",e=>{const c=e.target.closest(".member");if(c)openM(+c.dataset.i)});
 document.getElementById("members").addEventListener("keydown",e=>{const c=e.target.closest(".member");if(c&&e.key==="Enter")openM(+c.dataset.i)});
 modal.addEventListener("click",e=>{if(e.target===modal||e.target.closest(".close"))modal.hidden=true});
 document.getElementById("cform").addEventListener("submit",e=>{e.preventDefault();document.getElementById("cok").hidden=false});
+// ===== address lock (hides the "Pardis 3" part until the second password) =====
+const norm=s=>s.trim().replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));
+let addrOpen=false;try{addrOpen=sessionStorage.getItem("addr_ok")==="1"}catch(e){}
+function revealAddr(){document.querySelectorAll(".addr").forEach(s=>{s.textContent="پردیس "+String.fromCharCode(1779)})}
+const amodal=document.getElementById("amodal");
+if(addrOpen)revealAddr();
+document.addEventListener("click",e=>{if(e.target.closest(".unlock")){amodal.hidden=false;document.getElementById("aerr").hidden=true;setTimeout(()=>document.getElementById("apw").focus(),50)}
+ else if(e.target===amodal)amodal.hidden=true});
+document.getElementById("aform").addEventListener("submit",e=>{e.preventDefault();
+ if(norm(document.getElementById("apw").value)==="123321"){addrOpen=true;try{sessionStorage.setItem("addr_ok","1")}catch(x){}revealAddr();amodal.hidden=true;document.getElementById("apw").value=""}
+ else document.getElementById("aerr").hidden=false});
+
+// ===== snake game =====
+(function(){
+const cv=document.getElementById("cv"),ctx=cv.getContext("2d"),N=18,S=cv.width/N;
+const FOODS=[{n:"هامون",c:"#e9cf8a"},{n:"تلامپوس",c:"#7fd1ff"},{n:"علیزاده",c:"#ff8fa3"}];
+const scEl=document.getElementById("sc"),hsEl=document.getElementById("hs"),msg=document.getElementById("gmsg"),btn=document.getElementById("startBtn");
+let snake,dir,queue,food,score=0,timer,state="idle",best=0;
+try{best=+localStorage.getItem("snakeBest")||0}catch(e){}
+hsEl.textContent=best;
+function place(){let p;do{p={x:Math.floor(Math.random()*N),y:Math.floor(Math.random()*N),f:FOODS[Math.floor(Math.random()*FOODS.length)]}}while(snake.some(s=>s.x===p.x&&s.y===p.y));food=p}
+function reset(){snake=[{x:9,y:9},{x:8,y:9},{x:7,y:9}];dir={x:1,y:0};queue=[];score=0;scEl.textContent=0;place()}
+function setDir(x,y){if(state!=="run")return;const ref=queue.length?queue[queue.length-1]:dir;if((ref.x===-x&&ref.y===-y)||(ref.x===x&&ref.y===y))return;if(queue.length<2)queue.push({x,y})}
+function speed(){clearInterval(timer);timer=setInterval(step,Math.max(70,140-score*4))}
+function step(){if(queue.length)dir=queue.shift();
+ const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+ if(h.x<0||h.y<0||h.x>=N||h.y>=N||snake.some(s=>s.x===h.x&&s.y===h.y)){over();return}
+ snake.unshift(h);
+ if(h.x===food.x&&h.y===food.y){score++;scEl.textContent=score;msg.textContent="خوردی: "+food.f.n+"!";place();speed()}else snake.pop();
+ draw()}
+function start(){reset();state="run";msg.textContent="";btn.textContent="شروع دوباره";speed();draw()}
+function over(){clearInterval(timer);state="over";if(score>best){best=score;hsEl.textContent=best;try{localStorage.setItem("snakeBest",best)}catch(e){}}msg.textContent="باختی! امتیاز: "+score;btn.textContent="بازی دوباره";draw()}
+function eye(x,y){ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(x,y,2.8,0,7);ctx.fill();ctx.fillStyle="#0b1220";ctx.beginPath();ctx.arc(x+dir.x*1.2,y+dir.y*1.2,1.3,0,7);ctx.fill()}
+function draw(){
+ ctx.fillStyle="#0b1220";ctx.fillRect(0,0,cv.width,cv.height);
+ ctx.strokeStyle="rgba(120,160,255,.08)";ctx.lineWidth=1;ctx.beginPath();
+ for(let i=1;i<N;i++){ctx.moveTo(i*S,0);ctx.lineTo(i*S,cv.height);ctx.moveTo(0,i*S);ctx.lineTo(cv.width,i*S)}ctx.stroke();
+ if(food){const cx=food.x*S+S/2,cy=food.y*S+S/2;
+  ctx.save();ctx.shadowColor=food.f.c;ctx.shadowBlur=14;ctx.fillStyle=food.f.c;ctx.beginPath();ctx.arc(cx,cy,S*.42,0,7);ctx.fill();ctx.restore();
+  ctx.fillStyle="#0b1220";ctx.beginPath();ctx.arc(cx-3.5,cy-2,1.8,0,7);ctx.arc(cx+3.5,cy-2,1.8,0,7);ctx.fill();
+  ctx.strokeStyle="#0b1220";ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(cx,cy+1,4,.1*Math.PI,.9*Math.PI);ctx.stroke();
+  ctx.font="700 11px Vazirmatn,Tahoma,sans-serif";ctx.textAlign="center";ctx.fillStyle="#fff";
+  ctx.fillText(food.f.n,Math.min(cv.width-26,Math.max(26,cx)),food.y===0?cy+S*.95:cy-S*.62)}
+ for(let i=snake.length-1;i>=0;i--){const s=snake[i],t=i/snake.length;
+  ctx.save();ctx.shadowColor="#e9cf8a";ctx.shadowBlur=10;ctx.fillStyle="hsl("+(45+t*150)+",80%,"+(60-t*12)+"%)";
+  ctx.beginPath();ctx.arc(s.x*S+S/2,s.y*S+S/2,S*(.47-.1*t),0,7);ctx.fill();ctx.restore()}
+ const hd=snake[0],hx=hd.x*S+S/2,hy=hd.y*S+S/2,px=-dir.y,py=dir.x;
+ eye(hx+dir.x*3+px*4,hy+dir.y*3+py*4);eye(hx+dir.x*3-px*4,hy+dir.y*3-py*4);
+ if(state!=="run"){ctx.fillStyle="rgba(0,0,0,.55)";ctx.fillRect(0,0,cv.width,cv.height);ctx.fillStyle="#fff";ctx.font="800 22px Vazirmatn,Tahoma,sans-serif";ctx.textAlign="center";
+  ctx.fillText(state==="over"?"پایان بازی":"آماده‌ای؟",cv.width/2,cv.height/2-6);ctx.font="600 14px Vazirmatn,Tahoma,sans-serif";ctx.fillText(state==="over"?"امتیاز: "+score:"دکمه‌ی شروع بازی را بزن",cv.width/2,cv.height/2+22)}}
+addEventListener("keydown",e=>{const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]}[e.key];
+ if(!m||state!=="run"||(e.target.closest&&e.target.closest("input,textarea")))return;e.preventDefault();setDir(m[0],m[1])});
+document.querySelectorAll(".pad button").forEach(b=>b.addEventListener("click",()=>{const [x,y]=b.dataset.d.split(",").map(Number);setDir(x,y)}));
+let tx=0,ty=0;
+cv.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+cv.addEventListener("touchend",e=>{const t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;
+ if(Math.abs(dx)>Math.abs(dy))setDir(dx>0?1:-1,0);else setDir(0,dy>0?1:-1)},{passive:true});
+btn.addEventListener("click",start);
+reset();draw();
+})();
+
 // simple password gate
 function unlock(){document.getElementById("gate").hidden=true;document.getElementById("site").hidden=false}
 try{if(sessionStorage.getItem("hamoon_ok")==="1")unlock()}catch(e){}
