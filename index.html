@@ -188,7 +188,11 @@ footer::before{content:"";position:absolute;inset:0;background:linear-gradient(9
 footer .wrap{position:relative}
 .hud{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 14px}
 .box-body h4{position:relative}
-#site{animation:pop .5s both}
+/* must stay opacity-only: a transform keyframe (pop) keeps #site a containing block for its
+   position:fixed children, so #fx got stretched to the full page height and #prog/#top
+   anchored to the document instead of the viewport */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+#site{animation:fadeIn .5s both}
 /* ===== extra animation ===== */
 @keyframes drop{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
 @keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(16px,-26px)}66%{transform:translate(-14px,14px)}}
@@ -240,7 +244,6 @@ html,body{overflow-x:clip;max-width:100%}
 #gate::before{width:280px;height:280px;background:#c8a14b44;right:8%;top:10%}
 #gate::after{width:340px;height:340px;background:#7fb2ff33;left:5%;bottom:5%;animation-delay:-4s}
 #gate .card{position:relative;z-index:1}
-#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
 /* the glow lives inside a clipping layer: on its own it stuck 170px past the left edge,
    which in an RTL page counts as scrollable overflow and widened the whole document */
 #glowwrap{position:fixed;inset:0;overflow:clip;pointer-events:none;z-index:3}
@@ -283,7 +286,9 @@ html,body{overflow-x:clip;max-width:100%}
 <svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="var(--bg)" d="M0 40c160 26 320 34 480 22s320-44 480-44 240 18 360 26v26H0z"/></svg>
 </div>
 <div id="prog"></div><button id="top" aria-label="بازگشت به بالا">▲</button>
-<canvas id="fx" aria-hidden="true"></canvas><div id="glowwrap" aria-hidden="true"><div id="glow"></div></div>
+<!-- the floating-sparkle canvas used to live here; removed because it read as white static over the page.
+     The script below is guarded by `if(cv)`, so deleting the element is enough to switch it off. -->
+<div id="glowwrap" aria-hidden="true"><div id="glow"></div></div>
 <div class="marq" aria-hidden="true"><div class="mt">
  <span>سالن همایش</span><i>✦</i><span>فضای اداری</span><i>✦</i><span>تالار و باغ</span><i>✦</i><span>ویلا و اقامتگاه</span><i>✦</i><span>قرارداد شفاف</span><i>✦</i><span>پشتیبانی کامل</span><i>✦</i>
  <span>سالن همایش</span><i>✦</i><span>فضای اداری</span><i>✦</i><span>تالار و باغ</span><i>✦</i><span>ویلا و اقامتگاه</span><i>✦</i><span>قرارداد شفاف</span><i>✦</i><span>پشتیبانی کامل</span><i>✦</i>
@@ -324,7 +329,8 @@ html,body{overflow-x:clip;max-width:100%}
       <div class="hud"><span>امتیاز: <b id="wsc">0</b></span><span>رکورد: <b id="whs">0</b></span></div>
       <canvas id="wv" width="360" height="460" aria-label="بازی چوب‌بر"></canvas>
       <div id="wmsg"></div>
-      <div class="wbtns"><button data-s="-1" aria-label="ضربه از چپ">◀ چپ</button><button data-s="1" aria-label="ضربه از راست">راست ▶</button></div>
+      <!-- RTL flex puts the first child on the right, so "راست" comes first -->
+      <div class="wbtns"><button data-s="1" aria-label="ضربه از راست">راست ▶</button><button data-s="-1" aria-label="ضربه از چپ">◀ چپ</button></div>
       <button class="btn" id="wStart">شروع بازی</button>
       <form class="save" id="save-wood" hidden><span>امتیاز <b class="sv-score">۰</b> — اسمت را بنویس تا ثبت شود</span><div><input placeholder="اسم شما" maxlength="16"><button class="btn">ثبت رکورد</button></div></form>
     </div>
@@ -1165,7 +1171,10 @@ cp.addEventListener("click",async()=>{
  const cv=document.getElementById("fx");
  if(cv){const c=cv.getContext("2d");let w=0,h=0,mx=-999,my=-999,sv=0,last=scrollY;
   const N=coarse?26:54,ps=Array.from({length:N},()=>({x:R(),y:R(),r:R()*2+.6,v:R()*.25+.06,p:R()*6,c:R()<.25?"#7fd1ff":"#e9cf8a"}));
-  function size(){w=cv.width=innerWidth;h=cv.height=innerHeight}size();addEventListener("resize",size);
+  // size from the canvas's own box, so the dots can never come out stretched into streaks
+  function size(){const b=cv.getBoundingClientRect();
+   w=cv.width=Math.round(b.width)||innerWidth;h=cv.height=Math.round(b.height)||innerHeight}
+  size();addEventListener("resize",size);window.__fxSize=size;
   addEventListener("pointermove",e=>{mx=e.clientX;my=e.clientY},{passive:true});
   addEventListener("scroll",()=>{sv=Math.min(6,Math.abs(scrollY-last));last=scrollY},{passive:true});
   (function loop(t){
@@ -1230,7 +1239,8 @@ document.addEventListener("pointerdown",e=>{const b=e.target.closest(".btn,.pad 
 })();
 
 // simple password gate
-function unlock(){document.getElementById("gate").hidden=true;document.getElementById("site").hidden=false}
+function unlock(){document.getElementById("gate").hidden=true;document.getElementById("site").hidden=false;
+ if(window.__fxSize)window.__fxSize()}
 try{if(sessionStorage.getItem("hamoon_ok")==="1")unlock()}catch(e){}
 document.getElementById("gateForm").addEventListener("submit",e=>{e.preventDefault();
  const v=document.getElementById("pw").value.trim().replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));
